@@ -1,23 +1,14 @@
 const express = require("express");
 const { default: mongoose } = require("mongoose");
+require("../models/employeeModel");
+const Employee = mongoose.model("Employee");
 
-// recordRoutes is an instance of the express router.
+// employeeRoutes is an instance of the express router.
 // We use it to define our routes.
 // The router will be added as a middleware and will take control of requests starting with path /employee.
-const recordRoutes = express.Router();
+const employeeRoutes = express.Router();
 
-const employeeSchema = new mongoose.Schema({
-  name: {
-    type: String,
-    required: [true, "Name is required."],
-  },
-  position: String,
-  level: String,
-});
-
-const Employee = mongoose.model("Employee", employeeSchema);
-
-recordRoutes.route("/employee").get(function (req, res) {
+employeeRoutes.route("/employee").get(function (req, res) {
   Employee.find(function (err, result) {
     if (err) throw err;
     res.json(result);
@@ -25,7 +16,7 @@ recordRoutes.route("/employee").get(function (req, res) {
 });
 
 // This section will help you get a single record by id
-recordRoutes.route("/employee/:id").get(function (req, res) {
+employeeRoutes.route("/employee/:id").get(function (req, res) {
   let myquery = { _id: req.params.id };
 
   Employee.findOne(myquery, function (err, result) {
@@ -35,7 +26,7 @@ recordRoutes.route("/employee/:id").get(function (req, res) {
 });
 
 // This section will help you create a new record.
-recordRoutes.route("/employee/add").post(function (req, res) {
+employeeRoutes.route("/employee/add").post(function (req, res) {
   let employee = new Employee({
     name: req.body.name,
     position: req.body.position,
@@ -48,7 +39,7 @@ recordRoutes.route("/employee/add").post(function (req, res) {
 });
 
 // This section will help you update a record by id.
-recordRoutes.route("/update/:id").post(function (req, res) {
+employeeRoutes.route("/update/:id").post(function (req, res) {
   let myquery = { _id: req.params.id };
   let newvalues = {
     name: req.body.name,
@@ -63,7 +54,7 @@ recordRoutes.route("/update/:id").post(function (req, res) {
 });
 
 // This section will help you delete a record
-recordRoutes.route("/:id").delete((req, res) => {
+employeeRoutes.route("/:id").delete((req, res) => {
   let myquery = { _id: req.params.id };
 
   Employee.deleteOne(myquery, function (err, result) {
@@ -72,6 +63,6 @@ recordRoutes.route("/:id").delete((req, res) => {
   });
 });
 
-module.exports = recordRoutes;
+module.exports = employeeRoutes;
 
 //mongoose.connection.close();

@@ -7,7 +7,7 @@ require("dotenv").config({ path: "./config.env" });
 
 app.use(cors());
 app.use(express.json());
-app.use(require("./routes/employee"));
+app.use(require("./routes/employeeRoutes"));
 app.use(express.static(path.join(__dirname, "client", "build")))
 
 app.get("*", (req, res) => {
