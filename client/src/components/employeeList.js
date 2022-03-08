@@ -19,13 +19,13 @@ const Record = (props) => (
  </tr>
 );
  
-export default function RecordList() {
+export default function EmployeeList() {
  const [records, setRecords] = useState([]);
  
  // This method fetches the records from the database.
  useEffect(() => {
    async function getRecords() {
-     const response = await fetch(`http://localhost:5000/record/`);
+     const response = await fetch(`http://localhost:5000/employee/`);
  
      if (!response.ok) {
        const message = `An error occurred: ${response.statusText}`;
@@ -53,7 +53,7 @@ export default function RecordList() {
  }
  
  // This method will map out the records on the table
- function recordList() {
+ function employeeList() {
    return records.map((record) => {
      return (
        <Record
@@ -68,7 +68,7 @@ export default function RecordList() {
  // This following section will display the table with the records of individuals.
  return (
    <div>
-     <h3>Record List</h3>
+     <h3>Employee List</h3>
      <table className="table table-striped" style={{ marginTop: 20 }}>
        <thead>
          <tr>
@@ -78,7 +78,7 @@ export default function RecordList() {
            <th>Action</th>
          </tr>
        </thead>
-       <tbody>{recordList()}</tbody>
+       <tbody>{employeeList()}</tbody>
      </table>
    </div>
  );
